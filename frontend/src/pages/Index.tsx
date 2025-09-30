@@ -1,9 +1,11 @@
-// Update this page (the content is just a fallback if you fail to update the page)
-
 import { Settings } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+  
   // Array of creative loading messages
   const loadingMessages = [
     "Gears are spinning and code elves are still typing away.",
@@ -44,12 +46,20 @@ const Index = () => {
 
       {/* Main Text with Fade Animation */}
       <h1
-        className={`text-xl font-medium text-gray-300 text-center max-w-md transition-opacity duration-500 ${
+        className={`text-xl font-medium text-gray-300 text-center max-w-md transition-opacity duration-500 mb-8 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
         {loadingMessages[currentMessageIndex]}
       </h1>
+
+      {/* Demo Button */}
+      <Button 
+        onClick={() => navigate('/dashboard')}
+        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+      >
+        View Family Dashboard Demo
+      </Button>
     </div>
   );
 };
