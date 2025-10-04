@@ -1,15 +1,18 @@
 # Chatbot Agent Feature Specification
 ## Context-Aware Family Archive Assistant
 
-**Version**: 1.0
+**Version**: 1.1
 **Date**: October 2025
 **Status**: Ready for Implementation
+**Platform**: MyLife Member Services
+
+> **Important**: Voice Legacy runs on MyLife platform. This chatbot will be implemented as a **MyLife bot-avatar** named "VoiceLegacy Assistant". See [MYLIFE_INTEGRATION_PLAN.md](./MYLIFE_INTEGRATION_PLAN.md) for backend integration details.
 
 ---
 
 ## Executive Summary
 
-A persistent, context-aware chatbot that appears on every view in the Voice Legacy Platform, helping users navigate the platform, understand their family archive, and get answers about stories, family members, and how to contribute.
+A persistent, context-aware chatbot that appears on every view in the Voice Legacy Platform (a MyLife member service), helping users navigate the platform, understand their family archive, and get answers about stories, family members, and how to contribute.
 
 ### Key Goals
 1. **Reduce friction** - Help users understand what to do next

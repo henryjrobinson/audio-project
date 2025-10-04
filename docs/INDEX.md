@@ -77,6 +77,15 @@
   - Implementation phases
   - 4-week development plan
 
+### Platform Integration
+- **[MYLIFE_INTEGRATION_PLAN.md](./MYLIFE_INTEGRATION_PLAN.md)** ⭐ NEW ⭐
+  - Voice Legacy on MyLife platform
+  - Complete backend API specification
+  - Database schema for MyLife PostgreSQL
+  - Bot framework integration
+  - Frontend mock API architecture
+  - Phase-by-phase integration plan
+
 ---
 
 ## 🚀 Setup & Development
