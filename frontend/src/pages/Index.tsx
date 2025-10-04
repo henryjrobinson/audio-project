@@ -53,13 +53,21 @@ const Index = () => {
         {loadingMessages[currentMessageIndex]}
       </h1>
 
-      {/* Demo Button */}
-      <Button 
-        onClick={() => navigate('/dashboard')}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
-      >
-        View Family Dashboard Demo
-      </Button>
+      {/* Demo Buttons */}
+      <div className="flex gap-4">
+        <Button
+          onClick={() => navigate('/dashboard')}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+        >
+          Owner Dashboard
+        </Button>
+        <Button
+          onClick={() => navigate('/dashboard/elderly')}
+          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2"
+        >
+          Elderly Dashboard
+        </Button>
+      </div>
     </div>
   );
 };
