@@ -77,6 +77,14 @@
   - Implementation phases
   - 4-week development plan
 
+- **[PERSONA_DASHBOARDS_SPEC.md](./PERSONA_DASHBOARDS_SPEC.md)** ⭐ NEW ⭐
+  - 4 distinct dashboard experiences (Owner, Elderly, Contributor, Viewer)
+  - Topic suggestion system (family → elderly prompts)
+  - Multi-modal contribution (voice, text, photos)
+  - AI-assisted story writing with chatbot
+  - Theme discovery and gap analysis
+  - Complete UI/UX specifications
+
 ### Platform Integration
 - **[MYLIFE_INTEGRATION_PLAN.md](./MYLIFE_INTEGRATION_PLAN.md)** ⭐ NEW ⭐
   - Voice Legacy on MyLife platform
