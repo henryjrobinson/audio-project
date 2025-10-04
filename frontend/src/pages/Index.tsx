@@ -54,7 +54,7 @@ const Index = () => {
       </h1>
 
       {/* Demo Buttons */}
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-4 justify-center">
         <Button
           onClick={() => navigate('/dashboard')}
           className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
@@ -66,6 +66,12 @@ const Index = () => {
           className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2"
         >
           Elderly Dashboard
+        </Button>
+        <Button
+          onClick={() => navigate('/dashboard/contributor')}
+          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2"
+        >
+          Contributor Dashboard
         </Button>
       </div>
     </div>
