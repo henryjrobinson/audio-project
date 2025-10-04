@@ -70,6 +70,13 @@
   - Success metrics
   - Budget considerations
 
+### Feature Specifications
+- **[CHATBOT_FEATURE_SPEC.md](./CHATBOT_FEATURE_SPEC.md)** ⭐ NEW
+  - Context-aware AI assistant
+  - Frontend & backend requirements
+  - Implementation phases
+  - 4-week development plan
+
 ---
 
 ## 🚀 Setup & Development
