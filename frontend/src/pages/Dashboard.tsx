@@ -5,24 +5,26 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
-import { 
-  Phone, 
-  Heart, 
-  BookOpen, 
-  Users, 
-  Calendar, 
-  Play, 
-  FileText, 
+import {
+  Phone,
+  Heart,
+  BookOpen,
+  Users,
+  Calendar,
+  Play,
+  FileText,
   Star,
   Clock,
   CheckCircle,
   Plus,
   Download,
-  Share2
+  Share2,
+  AlertCircle
 } from 'lucide-react';
 import StoryDetailModal from '@/components/StoryDetailModal';
 import InviteFamilyModal from '@/components/InviteFamilyModal';
 import ScheduleCallModal from '@/components/ScheduleCallModal';
+import { Chatbot } from '@/components/Chatbot';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -191,7 +193,13 @@ Now I watch them teaching their own children to drive, and I just smile and reme
                 <AvatarFallback>{parentInfo.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
               </Avatar>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">{parentInfo.name}'s Legacy Project</h1>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-2xl font-bold text-gray-900">{parentInfo.name}'s Legacy Project</h1>
+                  <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-300">
+                    <AlertCircle className="w-3 h-3 mr-1" />
+                    Demo Mode
+                  </Badge>
+                </div>
                 <p className="text-gray-600">Preserving precious memories • Started March 2024</p>
               </div>
             </div>
@@ -583,6 +591,12 @@ Now I watch them teaching their own children to drive, and I just smile and reme
       <ScheduleCallModal
         isOpen={showScheduleModal}
         onClose={() => setShowScheduleModal(false)}
+      />
+
+      {/* Chatbot Assistant */}
+      <Chatbot
+        archiveName={`${parentInfo.name}'s Legacy Project`}
+        hasUnreadInsights={false}
       />
     </div>
   );
