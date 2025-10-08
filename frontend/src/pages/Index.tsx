@@ -7,15 +7,13 @@ import { useEffect, useState } from "react";
 const Index = () => {
   const navigate = useNavigate();
   const [showDemoMode, setShowDemoMode] = useState(false);
+  const [hasOnboarded, setHasOnboarded] = useState(false);
 
   useEffect(() => {
-    // Check if user has completed onboarding
-    const hasOnboarded = localStorage.getItem('hasCompletedOnboarding');
-    if (hasOnboarded === 'true') {
-      // If they've onboarded, redirect to dashboard
-      navigate('/dashboard');
-    }
-  }, [navigate]);
+    // Check if user has completed onboarding (don't redirect, just track)
+    const onboarded = localStorage.getItem('hasCompletedOnboarding');
+    setHasOnboarded(onboarded === 'true');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -46,22 +44,45 @@ const Index = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-              <Button
-                size="lg"
-                onClick={() => navigate('/onboarding')}
-                className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
-              >
-                Start Preserving Memories
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => setShowDemoMode(!showDemoMode)}
-                className="text-lg px-8 py-6"
-              >
-                View Demo Dashboards
-              </Button>
+              {hasOnboarded ? (
+                <>
+                  <Button
+                    size="lg"
+                    onClick={() => navigate('/dashboard')}
+                    className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
+                  >
+                    Go to Dashboard
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => navigate('/onboarding')}
+                    className="text-lg px-8 py-6"
+                  >
+                    View Onboarding Tour Again
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    size="lg"
+                    onClick={() => navigate('/onboarding')}
+                    className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
+                  >
+                    Start Preserving Memories
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => setShowDemoMode(!showDemoMode)}
+                    className="text-lg px-8 py-6"
+                  >
+                    View Demo Dashboards
+                  </Button>
+                </>
+              )}
             </div>
 
             {/* Demo Mode Buttons */}
