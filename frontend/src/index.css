@@ -1,0 +1,358 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ============================================
+       SPACE AGE LOUNGE - COLOR PALETTE
+       Target: 70-80 year olds (1960s youth)
+       Era: Early-Mid 1960s optimistic futurism
+       ============================================ */
+
+    /* Primary Colors */
+    --powder-blue: #87CEEB;      /* Backgrounds, cards, accents */
+    --sky-blue: #6BB6D6;         /* Interactive elements, hover states */
+    --tangerine: #FF8C42;        /* Primary CTA, important actions */
+    --atomic-teal: #2A9D8F;      /* Success, progress, secondary CTAs */
+
+    /* Supporting Colors */
+    --champagne: #F4E4C1;        /* Page backgrounds, light surfaces */
+    --warm-gray: #A8A39D;        /* Secondary text, borders */
+    --deep-walnut: #2A1F1A;      /* Primary text, dark elements */
+    --coral-pink: #FF6B6B;       /* Alerts, special moments */
+
+    /* Semantic Colors */
+    --color-success: #2A9D8F;    /* Same as atomic-teal */
+    --color-warning: #FFB347;    /* Warm orange */
+    --color-error: #E76F51;      /* Muted coral-red */
+    --color-info: #87CEEB;       /* Same as powder-blue */
+
+    /* ============================================
+       TYPOGRAPHY
+       ============================================ */
+    --font-headline: 'Lexend', 'Outfit', 'DM Sans', system-ui, sans-serif;
+    --font-body: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --text-xs: 0.875rem;    /* 14px - metadata, captions only */
+    --text-sm: 1rem;        /* 16px - absolute minimum for body */
+    --text-base: 1.125rem;  /* 18px - preferred body text */
+    --text-lg: 1.25rem;     /* 20px - emphasis */
+    --text-xl: 1.5rem;      /* 24px - section headers */
+    --text-2xl: 2rem;       /* 32px - page headers */
+    --text-3xl: 3rem;       /* 48px - hero text */
+
+    --weight-normal: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
+    /* ============================================
+       SPACING
+       ============================================ */
+    --space-xs: 0.5rem;     /* 8px */
+    --space-sm: 0.75rem;    /* 12px */
+    --space-md: 1rem;       /* 16px */
+    --space-lg: 1.5rem;     /* 24px */
+    --space-xl: 2rem;       /* 32px */
+    --space-2xl: 3rem;      /* 48px */
+    --space-3xl: 4rem;      /* 64px */
+
+    /* ============================================
+       INTERACTION (Touch Targets)
+       ============================================ */
+    --touch-min: 44px;           /* Minimum tap target (WCAG) */
+    --touch-comfortable: 56px;   /* Preferred tap target */
+
+    /* ============================================
+       ANIMATION
+       ============================================ */
+    --duration-fast: 150ms;
+    --duration-normal: 250ms;
+    --duration-slow: 400ms;
+    --easing-smooth: cubic-bezier(0.4, 0.0, 0.2, 1);
+    --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* ============================================
+       SHADOWS
+       ============================================ */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+    --shadow-xl: 0 20px 60px rgba(0,0,0,0.3);
+
+    /* ============================================
+       SHADCN/UI COMPATIBILITY MAPPING
+       Space Age Lounge → shadcn tokens
+       ============================================ */
+    --background: 45 32% 91%;        /* Champagne #F4E4C1 */
+    --foreground: 30 14% 12%;        /* Deep Walnut #2A1F1A */
+    --card: 45 32% 91%;              /* Champagne for cards */
+    --card-foreground: 30 14% 12%;   /* Deep Walnut */
+    --popover: 45 32% 91%;           /* Champagne */
+    --popover-foreground: 30 14% 12%;/* Deep Walnut */
+    --primary: 16 100% 63%;          /* Tangerine #FF8C42 */
+    --primary-foreground: 30 14% 12%;/* Deep Walnut on tangerine */
+    --secondary: 173 53% 38%;        /* Atomic Teal #2A9D8F */
+    --secondary-foreground: 0 0% 100%;/* White text on teal */
+    --muted: 39 23% 68%;             /* Warm Gray #A8A39D */
+    --muted-foreground: 30 14% 12%;  /* Deep Walnut */
+    --accent: 197 68% 66%;           /* Powder Blue #87CEEB */
+    --accent-foreground: 30 14% 12%; /* Deep Walnut on powder blue */
+    --destructive: 9 68% 65%;        /* Coral Pink #FF6B6B */
+    --destructive-foreground: 0 0% 100%;/* White text on coral */
+    --border: 39 23% 68%;            /* Warm Gray */
+    --input: 39 23% 68%;             /* Warm Gray */
+    --ring: 16 100% 63%;             /* Tangerine for focus rings */
+    --radius: 1rem;                  /* 16px - soft, rounded corners */
+
+    /* Chart colors using Space Age palette */
+    --chart-1: 16 100% 63%;          /* Tangerine */
+    --chart-2: 173 53% 38%;          /* Atomic Teal */
+    --chart-3: 197 68% 66%;          /* Powder Blue */
+    --chart-4: 198 64% 62%;          /* Sky Blue */
+    --chart-5: 9 68% 65%;            /* Coral Pink */
+  }
+
+  /* ============================================
+     NO DARK MODE - Space Age Lounge is light only
+     Target users (70-80) need high contrast light UI
+     ============================================ */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    font-size: var(--text-base);  /* 18px - preferred body text */
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headline);
+    font-weight: var(--weight-bold);
+    line-height: 1.2;
+  }
+
+  /* ============================================
+     LINK STYLES - ALWAYS UNDERLINED
+     Color alone insufficient for accessibility
+     ============================================ */
+  a {
+    color: var(--atomic-teal);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+    font-weight: var(--weight-medium);
+    transition: all var(--duration-normal) var(--easing-smooth);
+  }
+
+  a:hover {
+    color: var(--sky-blue);
+    text-decoration-thickness: 3px;
+  }
+
+  a:focus {
+    outline: 3px solid rgba(42, 157, 143, 0.3);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* ============================================
+     BUTTON BASE STYLES
+     Pill-shaped, minimum 44px height, 18px text
+     ============================================ */
+  button {
+    font-family: var(--font-body);
+    font-size: var(--text-base);  /* 18px minimum */
+    font-weight: var(--weight-semibold);
+    min-height: var(--touch-min);
+    border-radius: 28px;  /* Pill-shaped */
+    transition: all var(--duration-normal) var(--easing-smooth);
+    cursor: pointer;
+  }
+
+  button:focus-visible {
+    outline: 3px solid rgba(255, 140, 66, 0.5);
+    outline-offset: 2px;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* ============================================
+     INPUT/TEXTAREA BASE STYLES
+     Thick borders, large text, clear focus
+     ============================================ */
+  input, textarea, select {
+    font-family: var(--font-body);
+    font-size: var(--text-base);  /* 18px */
+    min-height: var(--touch-comfortable);
+    background: white;
+    border: 3px solid var(--warm-gray);
+    border-radius: 8px;
+    padding: 16px 20px;
+    color: var(--deep-walnut);
+    transition: all var(--duration-normal) var(--easing-smooth);
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--atomic-teal);
+    outline: 3px solid rgba(42, 157, 143, 0.2);
+    outline-offset: 2px;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: var(--warm-gray);
+    opacity: 0.8;
+  }
+}
+
+/* ============================================
+   SPACE AGE LOUNGE ANIMATIONS
+   Generous timing (never below 150ms)
+   ============================================ */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 140, 66, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(255, 140, 66, 0.1);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+/* Animation classes */
+.animated {
+  transition: all var(--duration-normal) var(--easing-smooth);
+}
+
+.animated-entry {
+  animation: slideInUp var(--duration-slow) var(--easing-smooth);
+}
+
+.bounce-gentle {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+/* ============================================
+   CARD HOVER EFFECTS
+   Subtle, smooth animations
+   ============================================ */
+.card-hover {
+  transition: all var(--duration-normal) var(--easing-smooth);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ============================================
+   UTILITY CLASSES - SPACE AGE LOUNGE
+   ============================================ */
+
+/* Backgrounds */
+.bg-white {
+  background-color: var(--champagne);
+}
+
+.bg-powder-blue {
+  background-color: var(--powder-blue);
+}
+
+.bg-tangerine {
+  background-color: var(--tangerine);
+}
+
+.bg-atomic-teal {
+  background-color: var(--atomic-teal);
+}
+
+/* Text colors */
+.text-deep-walnut {
+  color: var(--deep-walnut);
+}
+
+.text-warm-gray {
+  color: var(--warm-gray);
+}
+
+/* Emoji-style icons */
+.emoji-icon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform var(--duration-normal) ease;
+}
+
+.emoji-icon:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* ============================================
+   ACCESSIBILITY - WCAG AAA TARGETS
+   ============================================ */
+
+/* Ensure all interactive elements are keyboard accessible */
+*:focus-visible {
+  outline: 3px solid rgba(255, 140, 66, 0.5);
+  outline-offset: 2px;
+}
+
+/* Skip to main content link for screen readers */
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 1em;
+  background-color: var(--tangerine);
+  color: var(--deep-walnut);
+  text-decoration: none;
+}
+
+.skip-to-main:focus {
+  left: 50%;
+  transform: translateX(-50%);
+}

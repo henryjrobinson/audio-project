@@ -66,12 +66,12 @@ const StoryDetailModal: React.FC<StoryDetailModalProps> = ({ isOpen, onClose, st
             </div>
             <div className="flex items-center space-x-2">
               {story.approved ? (
-                <Badge className="bg-green-100 text-green-800">
+                <Badge className="bg-atomic-teal/20 text-atomic-teal">
                   <CheckCircle className="h-3 w-3 mr-1" />
                   Approved
                 </Badge>
               ) : (
-                <Badge className="bg-yellow-100 text-yellow-800">
+                <Badge className="bg-tangerine/20 text-tangerine">
                   <Clock className="h-3 w-3 mr-1" />
                   Needs Review
                 </Badge>
@@ -82,12 +82,12 @@ const StoryDetailModal: React.FC<StoryDetailModalProps> = ({ isOpen, onClose, st
 
         <div className="space-y-6">
           {/* Audio Player */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+          <div className="bg-powder-blue/20 rounded-lg p-4 border border-powder-blue">
             <div className="flex items-center space-x-4">
               <Button
                 onClick={togglePlayback}
                 size="lg"
-                className="rounded-full w-12 h-12 bg-blue-600 hover:bg-blue-700"
+                className="rounded-full w-12 h-12 bg-atomic-teal hover:bg-atomic-teal/90"
               >
                 {isPlaying ? (
                   <Pause className="h-5 w-5" />
@@ -95,21 +95,21 @@ const StoryDetailModal: React.FC<StoryDetailModalProps> = ({ isOpen, onClose, st
                   <Play className="h-5 w-5 ml-0.5" />
                 )}
               </Button>
-              
+
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-blue-900">Original Conversation Audio</span>
-                  <span className="text-sm text-blue-700">{formatTime(currentTime)} / {formatTime(duration)}</span>
+                  <span className="text-sm font-medium text-deep-walnut">Original Conversation Audio</span>
+                  <span className="text-sm text-warm-gray">{formatTime(currentTime)} / {formatTime(duration)}</span>
                 </div>
-                <div className="w-full bg-blue-200 rounded-full h-2">
-                  <div 
-                    className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                <div className="w-full bg-warm-gray/30 rounded-full h-2">
+                  <div
+                    className="bg-atomic-teal h-2 rounded-full transition-all duration-300"
                     style={{ width: `${(currentTime / duration) * 100}%` }}
                   ></div>
                 </div>
               </div>
-              
-              <Volume2 className="h-5 w-5 text-blue-600" />
+
+              <Volume2 className="h-5 w-5 text-atomic-teal" />
             </div>
           </div>
 
@@ -176,7 +176,7 @@ const StoryDetailModal: React.FC<StoryDetailModalProps> = ({ isOpen, onClose, st
             </div>
             
             {!story.approved && (
-              <Button size="sm" className="bg-green-600 hover:bg-green-700">
+              <Button size="sm" className="bg-atomic-teal hover:bg-atomic-teal/90">
                 <CheckCircle className="h-4 w-4 mr-2" />
                 Approve Story
               </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -25,12 +25,33 @@ import StoryDetailModal from '@/components/StoryDetailModal';
 import InviteFamilyModal from '@/components/InviteFamilyModal';
 import ScheduleCallModal from '@/components/ScheduleCallModal';
 import { Chatbot } from '@/components/Chatbot';
+import { WelcomeBanner } from '@/components/WelcomeBanner';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedStory, setSelectedStory] = useState<any>(null);
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [showWelcomeBanner, setShowWelcomeBanner] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
+
+  useEffect(() => {
+    // Check if this is a first-time user
+    const hasSeenWelcome = localStorage.getItem('hasSeenWelcomeBanner');
+    const archiveDataStr = localStorage.getItem('archiveData');
+
+    if (!hasSeenWelcome) {
+      setShowWelcomeBanner(true);
+    }
+
+    if (archiveDataStr) {
+      try {
+        setUserData(JSON.parse(archiveDataStr));
+      } catch (e) {
+        console.error('Failed to parse archive data', e);
+      }
+    }
+  }, []);
 
   // Mock data representing a family's journey
   const parentInfo = {
@@ -182,35 +203,43 @@ Now I watch them teaching their own children to drive, and I just smile and reme
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-powder-blue shadow-lg border-b-4 border-tangerine">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4">
-              <Avatar className="h-12 w-12">
+              <Avatar className="h-14 w-14 ring-4 ring-tangerine ring-offset-2">
                 <AvatarImage src={parentInfo.photo} alt={parentInfo.name} />
-                <AvatarFallback>{parentInfo.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                <AvatarFallback className="bg-tangerine text-deep-walnut text-lg">
+                  {parentInfo.name.split(' ').map(n => n[0]).join('')}
+                </AvatarFallback>
               </Avatar>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-2xl font-bold text-gray-900">{parentInfo.name}'s Legacy Project</h1>
-                  <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-300">
+                  <h1 className="text-2xl font-bold text-deep-walnut">
+                    💝 {parentInfo.name}'s Memory Box
+                  </h1>
+                  <Badge variant="default" className="font-semibold">
                     <AlertCircle className="w-3 h-3 mr-1" />
                     Demo Mode
                   </Badge>
                 </div>
-                <p className="text-gray-600">Preserving precious memories • Started March 2024</p>
+                <p className="text-deep-walnut font-medium">✨ Collecting precious moments since March 2024</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="border-2 border-deep-walnut text-deep-walnut hover:bg-deep-walnut/10 hover:scale-105 transition-transform">
                 <Share2 className="h-4 w-4 mr-2" />
-                Share Progress
+                Share the Love
               </Button>
-              <Button size="sm" onClick={() => setShowScheduleModal(true)}>
+              <Button
+                size="sm"
+                onClick={() => setShowScheduleModal(true)}
+                className="shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+              >
                 <Calendar className="h-4 w-4 mr-2" />
-                Schedule Call
+                Chat with Mom
               </Button>
             </div>
           </div>
@@ -218,66 +247,87 @@ Now I watch them teaching their own children to drive, and I just smile and reme
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Banner for First-Time Users */}
+        {showWelcomeBanner && (
+          <div className="mb-6">
+            <WelcomeBanner
+              userName={userData?.yourName}
+              subjectName={userData?.subjectName || parentInfo.name}
+              onScheduleCall={() => setShowScheduleModal(true)}
+              onInviteFamily={() => setShowInviteModal(true)}
+              onDismiss={() => setShowWelcomeBanner(false)}
+            />
+          </div>
+        )}
+
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="conversations">Conversations</TabsTrigger>
-            <TabsTrigger value="stories">Stories</TabsTrigger>
-            <TabsTrigger value="family">Family</TabsTrigger>
+            <TabsTrigger value="overview">
+              🏠 Overview
+            </TabsTrigger>
+            <TabsTrigger value="conversations">
+              💬 Chats
+            </TabsTrigger>
+            <TabsTrigger value="stories">
+              📖 Stories
+            </TabsTrigger>
+            <TabsTrigger value="family">
+              👨‍👩‍👧‍👦 Family
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
             {/* Progress Overview */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+              <Card className="card-hover bg-powder-blue text-deep-walnut shadow-xl border-0">
                 <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center text-lg">
-                    <Phone className="h-5 w-5 mr-2" />
-                    Conversations
+                  <CardTitle className="flex items-center text-lg font-bold text-deep-walnut">
+                    <Phone className="h-6 w-6 mr-2 emoji-icon" />
+                    Heart-to-Hearts 💬
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold mb-2">{stats.conversationsCompleted}/{stats.totalConversations}</div>
-                  <Progress value={(stats.conversationsCompleted / stats.totalConversations) * 100} className="bg-blue-400" />
-                  <p className="text-blue-100 text-sm mt-2">67% Complete</p>
+                  <div className="text-4xl font-extrabold mb-3">{stats.conversationsCompleted}/{stats.totalConversations}</div>
+                  <Progress value={(stats.conversationsCompleted / stats.totalConversations) * 100} className="bg-deep-walnut/20 h-3 mb-2" />
+                  <p className="text-deep-walnut/90 text-sm font-semibold">🎉 You're 67% there! Keep going!</p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
+              <Card className="card-hover bg-atomic-teal text-white shadow-xl border-0">
                 <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center text-lg">
-                    <BookOpen className="h-5 w-5 mr-2" />
-                    Stories Captured
+                  <CardTitle className="flex items-center text-lg font-bold text-white">
+                    <BookOpen className="h-6 w-6 mr-2 emoji-icon" />
+                    Stories Unlocked 📖
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold mb-2">{stats.storiesExtracted}</div>
-                  <p className="text-green-100 text-sm">From {stats.hoursRecorded} hours of conversation</p>
-                  <div className="flex items-center mt-2">
-                    <Heart className="h-4 w-4 mr-1" />
-                    <span className="text-sm">Precious memories preserved</span>
+                  <div className="text-4xl font-extrabold mb-2">{stats.storiesExtracted}</div>
+                  <p className="text-white/90 text-sm mb-2">From {stats.hoursRecorded} hours of magic ✨</p>
+                  <div className="flex items-center mt-2 bg-white/20 rounded-lg px-2 py-1">
+                    <Heart className="h-5 w-5 mr-2 text-tangerine" />
+                    <span className="text-sm font-semibold">Memories saved forever! 💝</span>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
+              <Card className="card-hover bg-powder-blue text-deep-walnut shadow-xl border-0">
                 <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center text-lg">
-                    <Users className="h-5 w-5 mr-2" />
-                    Family Involved
+                  <CardTitle className="flex items-center text-lg font-bold text-deep-walnut">
+                    <Users className="h-6 w-6 mr-2 emoji-icon" />
+                    Family Squad 👨‍👩‍👧‍👦
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold mb-2">{stats.familyMembers}</div>
-                  <p className="text-purple-100 text-sm">Members collaborating</p>
-                  <Button 
-                    variant="secondary" 
-                    size="sm" 
-                    className="mt-2 bg-white/20 hover:bg-white/30"
+                  <div className="text-4xl font-extrabold mb-2">{stats.familyMembers}</div>
+                  <p className="text-deep-walnut/90 text-sm mb-3">Amazing people helping out! 🌟</p>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="mt-1 font-semibold hover:scale-105 transition-transform shadow-md"
                     onClick={() => setShowInviteModal(true)}
                   >
                     <Plus className="h-4 w-4 mr-1" />
-                    Invite More
+                    Invite More Family
                   </Button>
                 </CardContent>
               </Card>
@@ -285,37 +335,37 @@ Now I watch them teaching their own children to drive, and I just smile and reme
 
             {/* Recent Activity */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Clock className="h-5 w-5 mr-2 text-blue-600" />
-                    Recent Conversations
+              <Card className="shadow-lg border-2 border-atomic-teal">
+                <CardHeader className="bg-atomic-teal/10 border-b-2 border-atomic-teal">
+                  <CardTitle className="flex items-center text-deep-walnut">
+                    <Clock className="h-6 w-6 mr-2" />
+                    🎙️ Latest Chats
                   </CardTitle>
-                  <CardDescription>Latest sessions with Mom</CardDescription>
+                  <CardDescription className="text-deep-walnut font-medium">Your recent heart-to-hearts with Mom</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 pt-6">
                   {recentConversations.slice(0, 3).map((conversation) => (
-                    <div key={conversation.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div key={conversation.id} className="flex items-center justify-between p-4 bg-powder-blue/30 rounded-xl border-2 border-powder-blue hover:border-atomic-teal transition-all card-hover">
                       <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">{conversation.topic}</h4>
-                        <p className="text-sm text-gray-600">{conversation.date} • {conversation.duration}</p>
-                        <div className="flex items-center mt-1 space-x-2">
-                          <Badge variant="secondary" className="text-xs">
-                            {conversation.storiesExtracted} stories
+                        <h4 className="font-bold text-deep-walnut">{conversation.topic}</h4>
+                        <p className="text-sm text-warm-gray font-medium">{conversation.date} • {conversation.duration}</p>
+                        <div className="flex items-center mt-2 space-x-2">
+                          <Badge variant="secondary" className="text-xs bg-atomic-teal/20 text-atomic-teal font-semibold">
+                            📖 {conversation.storiesExtracted} stories
                           </Badge>
-                          <Badge variant="outline" className="text-xs">
-                            {conversation.emotionalMoments} emotional moments
+                          <Badge variant="outline" className="text-xs border-coral-pink text-coral-pink font-semibold">
+                            💕 {conversation.emotionalMoments} special moments
                           </Badge>
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
                         {conversation.status === 'processed' ? (
-                          <CheckCircle className="h-5 w-5 text-green-500" />
+                          <CheckCircle className="h-6 w-6 text-atomic-teal" />
                         ) : (
-                          <div className="h-5 w-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                          <div className="h-6 w-6 border-2 border-atomic-teal border-t-transparent rounded-full animate-spin" />
                         )}
-                        <Button variant="ghost" size="sm">
-                          <Play className="h-4 w-4" />
+                        <Button variant="ghost" size="sm" className="hover:scale-110 transition-transform">
+                          <Play className="h-5 w-5 text-atomic-teal" />
                         </Button>
                       </div>
                     </div>
@@ -323,35 +373,36 @@ Now I watch them teaching their own children to drive, and I just smile and reme
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Star className="h-5 w-5 mr-2 text-yellow-600" />
-                    Featured Stories
+              <Card className="shadow-lg border-2 border-tangerine">
+                <CardHeader className="bg-tangerine/10 border-b-2 border-tangerine">
+                  <CardTitle className="flex items-center text-deep-walnut">
+                    <Star className="h-6 w-6 mr-2" />
+                    ⭐ Story Highlights
                   </CardTitle>
-                  <CardDescription>Beautiful memories ready to review</CardDescription>
+                  <CardDescription className="text-deep-walnut font-medium">Beautiful moments captured forever</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 pt-6">
                   {extractedStories.slice(0, 3).map((story) => (
-                    <div key={story.id} className="p-3 bg-gray-50 rounded-lg">
+                    <div key={story.id} className="p-4 bg-tangerine/10 rounded-xl border-2 border-tangerine/30 hover:border-tangerine transition-all card-hover">
                       <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-medium text-gray-900">{story.title}</h4>
+                        <h4 className="font-bold text-deep-walnut">{story.title}</h4>
                         {story.approved ? (
-                          <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
+                          <CheckCircle className="h-6 w-6 text-atomic-teal flex-shrink-0" />
                         ) : (
-                          <Badge variant="outline" className="text-xs">Needs Review</Badge>
+                          <Badge variant="outline" className="text-xs bg-tangerine/20 border-tangerine text-deep-walnut font-semibold">✨ Review Me!</Badge>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600 mb-2">{story.excerpt}</p>
+                      <p className="text-sm text-deep-walnut/80 mb-3 font-medium">{story.excerpt}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-500">{story.duration}</span>
-                        <Button 
-                          variant="ghost" 
+                        <span className="text-xs text-warm-gray font-semibold">{story.duration}</span>
+                        <Button
+                          variant="ghost"
                           size="sm"
                           onClick={() => openStoryDetail(story)}
+                          className="bg-tangerine/20 hover:bg-tangerine/30 text-deep-walnut font-semibold hover:scale-105 transition-transform"
                         >
                           <FileText className="h-4 w-4 mr-1" />
-                          Read
+                          Read Story
                         </Button>
                       </div>
                     </div>
@@ -361,32 +412,48 @@ Now I watch them teaching their own children to drive, and I just smile and reme
             </div>
 
             {/* Next Steps */}
-            <Card className="bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200">
+            <Card className="bg-tangerine/10 border-4 border-tangerine shadow-2xl">
               <CardHeader>
-                <CardTitle className="text-amber-800">Next Steps in Mom's Legacy Journey</CardTitle>
-                <CardDescription className="text-amber-700">
-                  Keep the momentum going - every conversation captures irreplaceable memories
+                <CardTitle className="text-deep-walnut text-2xl flex items-center">
+                  🎯 Your Next Adventures
+                </CardTitle>
+                <CardDescription className="text-deep-walnut font-semibold text-base">
+                  Keep the magic going! Every chat saves precious moments forever ✨
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-amber-200">
-                    <Calendar className="h-8 w-8 text-amber-600" />
-                    <div>
-                      <h4 className="font-medium">Schedule Next Call</h4>
-                      <p className="text-sm text-gray-600">Continue capturing precious stories</p>
+                  <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border-3 border-tangerine shadow-lg card-hover">
+                    <div className="h-14 w-14 bg-tangerine rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                      <Calendar className="h-7 w-7 text-deep-walnut" />
                     </div>
-                    <Button size="sm" className="ml-auto" onClick={() => setShowScheduleModal(true)}>
-                      Schedule
+                    <div className="flex-1">
+                      <h4 className="font-bold text-deep-walnut text-lg">Plan Your Next Chat 💬</h4>
+                      <p className="text-sm text-deep-walnut font-medium">More stories are waiting to be discovered!</p>
+                    </div>
+                    <Button
+                      size="sm"
+                      className="ml-auto font-bold hover:scale-110 transition-transform shadow-lg"
+                      onClick={() => setShowScheduleModal(true)}
+                    >
+                      Let's Go!
                     </Button>
                   </div>
-                  <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-amber-200">
-                    <BookOpen className="h-8 w-8 text-amber-600" />
-                    <div>
-                      <h4 className="font-medium">Review Stories</h4>
-                      <p className="text-sm text-gray-600">2 stories awaiting your approval</p>
+                  <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border-3 border-atomic-teal shadow-lg card-hover">
+                    <div className="h-14 w-14 bg-atomic-teal rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                      <BookOpen className="h-7 w-7 text-white" />
                     </div>
-                    <Button variant="outline" size="sm" className="ml-auto">Review</Button>
+                    <div className="flex-1">
+                      <h4 className="font-bold text-deep-walnut text-lg">Review Stories ⭐</h4>
+                      <p className="text-sm text-deep-walnut font-medium">2 amazing stories need your love!</p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="ml-auto font-bold hover:scale-110 transition-transform"
+                    >
+                      Review
+                    </Button>
                   </div>
                 </div>
               </CardContent>
@@ -396,8 +463,8 @@ Now I watch them teaching their own children to drive, and I just smile and reme
           <TabsContent value="conversations" className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">Conversation History</h2>
-                <p className="text-gray-600">All recorded sessions with Mom</p>
+                <h2 className="text-2xl font-bold text-deep-walnut">Conversation History</h2>
+                <p className="text-warm-gray">All recorded sessions with Mom</p>
               </div>
               <Button onClick={() => setShowScheduleModal(true)}>
                 <Plus className="h-4 w-4 mr-2" />
@@ -412,33 +479,33 @@ Now I watch them teaching their own children to drive, and I just smile and reme
                     <div className="flex items-center justify-between mb-4">
                       <div>
                         <h3 className="text-lg font-semibold">{conversation.topic}</h3>
-                        <p className="text-gray-600">{conversation.date} • {conversation.duration}</p>
+                        <p className="text-warm-gray">{conversation.date} • {conversation.duration}</p>
                       </div>
                       <div className="flex items-center space-x-2">
                         {conversation.status === 'processed' ? (
-                          <Badge className="bg-green-100 text-green-800">Processed</Badge>
+                          <Badge className="bg-atomic-teal/20 text-atomic-teal">Processed</Badge>
                         ) : (
-                          <Badge className="bg-blue-100 text-blue-800">Processing</Badge>
+                          <Badge className="bg-powder-blue/20 text-atomic-teal">Processing</Badge>
                         )}
                       </div>
                     </div>
-                    
+
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                      <div className="text-center p-3 bg-blue-50 rounded-lg">
-                        <div className="text-2xl font-bold text-blue-600">{conversation.storiesExtracted}</div>
-                        <div className="text-sm text-blue-800">Stories</div>
+                      <div className="text-center p-3 bg-powder-blue/20 rounded-lg">
+                        <div className="text-2xl font-bold text-atomic-teal">{conversation.storiesExtracted}</div>
+                        <div className="text-sm text-deep-walnut">Stories</div>
                       </div>
-                      <div className="text-center p-3 bg-red-50 rounded-lg">
-                        <div className="text-2xl font-bold text-red-600">{conversation.emotionalMoments}</div>
-                        <div className="text-sm text-red-800">Emotional Moments</div>
+                      <div className="text-center p-3 bg-coral-pink/20 rounded-lg">
+                        <div className="text-2xl font-bold text-coral-pink">{conversation.emotionalMoments}</div>
+                        <div className="text-sm text-deep-walnut">Emotional Moments</div>
                       </div>
-                      <div className="text-center p-3 bg-green-50 rounded-lg">
-                        <div className="text-2xl font-bold text-green-600">{conversation.duration}</div>
-                        <div className="text-sm text-green-800">Duration</div>
+                      <div className="text-center p-3 bg-atomic-teal/20 rounded-lg">
+                        <div className="text-2xl font-bold text-atomic-teal">{conversation.duration}</div>
+                        <div className="text-sm text-deep-walnut">Duration</div>
                       </div>
-                      <div className="text-center p-3 bg-purple-50 rounded-lg">
-                        <div className="text-2xl font-bold text-purple-600">95%</div>
-                        <div className="text-sm text-purple-800">Clarity</div>
+                      <div className="text-center p-3 bg-powder-blue/20 rounded-lg">
+                        <div className="text-2xl font-bold text-atomic-teal">95%</div>
+                        <div className="text-sm text-deep-walnut">Clarity</div>
                       </div>
                     </div>
 
@@ -465,8 +532,8 @@ Now I watch them teaching their own children to drive, and I just smile and reme
           <TabsContent value="stories" className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">Extracted Stories</h2>
-                <p className="text-gray-600">Beautiful memories from Mom's conversations</p>
+                <h2 className="text-2xl font-bold text-deep-walnut">Extracted Stories</h2>
+                <p className="text-warm-gray">Beautiful memories from Mom's conversations</p>
               </div>
               <div className="flex space-x-2">
                 <Button variant="outline">
@@ -484,19 +551,19 @@ Now I watch them teaching their own children to drive, and I just smile and reme
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <h3 className="text-xl font-semibold mb-2">{story.title}</h3>
-                        <p className="text-gray-600 mb-3">{story.excerpt}</p>
+                        <p className="text-warm-gray mb-3">{story.excerpt}</p>
                         <div className="flex flex-wrap gap-2 mb-3">
                           {story.tags.map((tag) => (
                             <Badge key={tag} variant="secondary">{tag}</Badge>
                           ))}
                         </div>
-                        <p className="text-sm text-gray-500">{story.date} • {story.duration}</p>
+                        <p className="text-sm text-warm-gray/80">{story.date} • {story.duration}</p>
                       </div>
                       <div className="flex items-center space-x-2 ml-4">
                         {story.approved ? (
-                          <Badge className="bg-green-100 text-green-800">Approved</Badge>
+                          <Badge className="bg-atomic-teal/20 text-atomic-teal">Approved</Badge>
                         ) : (
-                          <Badge className="bg-yellow-100 text-yellow-800">Needs Review</Badge>
+                          <Badge className="bg-tangerine/20 text-tangerine">Needs Review</Badge>
                         )}
                       </div>
                     </div>
@@ -530,8 +597,8 @@ Now I watch them teaching their own children to drive, and I just smile and reme
           <TabsContent value="family" className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">Family Members</h2>
-                <p className="text-gray-600">Everyone helping preserve Mom's legacy</p>
+                <h2 className="text-2xl font-bold text-deep-walnut">Family Members</h2>
+                <p className="text-warm-gray">Everyone helping preserve Mom's legacy</p>
               </div>
               <Button onClick={() => setShowInviteModal(true)}>
                 <Plus className="h-4 w-4 mr-2" />
@@ -551,13 +618,13 @@ Now I watch them teaching their own children to drive, and I just smile and reme
                         </Avatar>
                         <div>
                           <h3 className="font-semibold">{member.name}</h3>
-                          <p className="text-gray-600">{member.role}</p>
+                          <p className="text-warm-gray">{member.role}</p>
                         </div>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <Badge 
+                        <Badge
                           variant={member.status === 'Active' ? 'default' : 'secondary'}
-                          className={member.status === 'Active' ? 'bg-green-100 text-green-800' : ''}
+                          className={member.status === 'Active' ? 'bg-atomic-teal/20 text-atomic-teal' : ''}
                         >
                           {member.status}
                         </Badge>
