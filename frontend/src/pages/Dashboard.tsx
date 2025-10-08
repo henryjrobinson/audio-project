@@ -26,6 +26,7 @@ import InviteFamilyModal from '@/components/InviteFamilyModal';
 import ScheduleCallModal from '@/components/ScheduleCallModal';
 import { Chatbot } from '@/components/Chatbot';
 import { WelcomeBanner } from '@/components/WelcomeBanner';
+import { OnboardingBanner } from '@/components/OnboardingBanner';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -33,14 +34,22 @@ const Dashboard = () => {
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [showWelcomeBanner, setShowWelcomeBanner] = useState(false);
+  const [showOnboardingBanner, setShowOnboardingBanner] = useState(false);
   const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
-    // Check if this is a first-time user
+    // Check if user wants to see onboarding banner
+    const hideOnboardingBanner = localStorage.getItem('hideOnboardingBanner');
+    const hasCompletedOnboarding = localStorage.getItem('hasCompletedOnboarding');
     const hasSeenWelcome = localStorage.getItem('hasSeenWelcomeBanner');
     const archiveDataStr = localStorage.getItem('archiveData');
 
-    if (!hasSeenWelcome) {
+    // Show onboarding banner if they haven't completed it or want to see it again
+    if (!hasCompletedOnboarding || hideOnboardingBanner !== 'true') {
+      setShowOnboardingBanner(true);
+    }
+
+    if (!hasSeenWelcome && hasCompletedOnboarding) {
       setShowWelcomeBanner(true);
     }
 
@@ -247,6 +256,11 @@ Now I watch them teaching their own children to drive, and I just smile and reme
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Onboarding Banner - Always Available */}
+        {showOnboardingBanner && (
+          <OnboardingBanner onDismiss={() => setShowOnboardingBanner(false)} />
+        )}
+
         {/* Welcome Banner for First-Time Users */}
         {showWelcomeBanner && (
           <div className="mb-6">
