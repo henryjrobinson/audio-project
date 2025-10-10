@@ -1,4 +1,28 @@
-# Voice Legacy Platform - Architecture Document
+# ⚠️ PARTIALLY OUTDATED - V1 Architecture Document
+
+> **This document describes the V1 interview-focused architecture.**
+>
+> **Current Architecture**: See [ARCHITECTURE_V2.md](./ARCHITECTURE_V2.md) for the V2 collaborative family platform
+>
+> **Current Implementation Plan**: See [PRODUCT_ROADMAP_V2.md](./PRODUCT_ROADMAP_V2.md) for the 8-week V2 MVP
+>
+> **What's Still Relevant**:
+> - ✅ Technology Stack (Node, Express, Prisma, Postgres, React) - Still accurate
+> - ✅ API Design Patterns - Still applicable
+> - ✅ Security Considerations - Still valid
+> - ✅ Database Relationships - Mostly accurate (renaming LegacyProject → FamilyArchive)
+>
+> **What's Outdated**:
+> - ❌ Data Models (V1 models, V2 adds Theme, AIInsight, Prompt, Collection)
+> - ❌ MVP Scope (12-week plan superseded by 8-week V2 plan)
+> - ❌ Feature Focus (Interview service vs collaborative platform)
+
+---
+
+<details>
+<summary><strong>📜 V1 Architecture Documentation (Click to expand)</strong></summary>
+
+# Voice Legacy Platform - Architecture Document (V1)
 
 ## Overview
 Voice Legacy is an AI-powered platform that helps families preserve memories from aging loved ones through guided conversations, automatic story extraction, and collaborative family engagement.
@@ -448,3 +472,8 @@ VITE_API_BASE_URL=http://localhost:3000/v1
 4. Create API client in frontend
 5. Replace mock data with API calls
 6. Set up development environment with Docker
+</details>
+
+---
+
+**For current V2 architecture, see [ARCHITECTURE_V2.md](./ARCHITECTURE_V2.md)**

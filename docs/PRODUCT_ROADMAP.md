@@ -1,4 +1,17 @@
-# Voice Legacy - Product Roadmap
+# ⚠️ OUTDATED DOCUMENT - For Historical Reference Only
+
+> **This document has been superseded by [PRODUCT_ROADMAP_V2.md](./PRODUCT_ROADMAP_V2.md)**
+>
+> **Current Plan**: 8-week V2 MVP sprint (October 2025)
+>
+> **This V1 roadmap is kept for historical context only. Do not use for implementation.**
+
+---
+
+<details>
+<summary><strong>📜 Original V1 Product Roadmap (Click to expand)</strong></summary>
+
+# Voice Legacy - Product Roadmap (V1 - Original Plan)
 
 ## Vision
 
@@ -342,3 +355,4 @@ Voice Legacy aims to become the leading platform for families to preserve precio
 - [API Documentation](./backend/README.md)
 
 Last Updated: January 2025
+</details>
