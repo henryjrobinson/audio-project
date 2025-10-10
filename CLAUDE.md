@@ -2248,3 +2248,14 @@ Tag Conventions: wrap remote repo context in:
   <remote-github-repo repo="user/repo" ref="main"> ...context... </remote-github-repo>
 This context is for the CURRENT chat only; do not persist.
 <!-- TEMP_VIBE_TOOLS_END -->
+<!-- TEMP_VIBE_TOOLS_START -->
+<vibe-tools integration>
+Available tools (call only if helpful):
+- Remote Repo Context: Pack a GitHub repo and include its context for this chat only.
+  How to run: bun run "/Users/henryrobinson/.conare/playground/scripts/vibe-tools.ts" remote-repo --repo <user/repo|url> [--ref main] [--style markdown]
+  Notes: Output is wrapped in <remote-github-repo ...> ... </remote-github-repo>. Compressed by default. No persistence; include only when explicitly requested.
+
+Tag Conventions: wrap remote repo context in:
+  <remote-github-repo repo="user/repo" ref="main"> ...context... </remote-github-repo>
+This context is for the CURRENT chat only; do not persist.
+<!-- TEMP_VIBE_TOOLS_END -->
